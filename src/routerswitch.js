@@ -53,17 +53,17 @@ const RouteSwitch = () => {
   };
 
   const decrementQuantity = (item) => {
-    if (item.quantity > 0) {
-      const decrementedArray = cart.map((a) => {
-        if (item === a) {
-          a.quantity -= 1;
-          return a;
-        } else if (item !== a) {
-          return a;
-        }
-      });
-      setCart(decrementedArray);
-    }
+    const decrementedArray = cart.map((a) => {
+      if (a.quantity === 1 && item === a) {
+        return a;
+      } else if (item === a && a.quantity > 1) {
+        a.quantity -= 1;
+        return a;
+      } else if (item !== a) {
+        return a;
+      }
+    });
+    setCart(decrementedArray);
   };
 
   const clearCart = () => {
