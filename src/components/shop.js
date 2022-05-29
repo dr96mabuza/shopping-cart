@@ -2,7 +2,14 @@ import React from "react";
 import "./styles/cartStyle.css";
 
 function Shop(props) {
-  const { cart, total, clearCart, removeItemFromCart } = props;
+  const {
+    cart,
+    total,
+    clearCart,
+    removeItemFromCart,
+    incrementQuantity,
+    decrementQuantity,
+  } = props;
 
   return (
     <>
@@ -15,7 +22,26 @@ function Shop(props) {
                 <img src={product.src} alt="" className="cart-item-image" />
               </div>
               <div className="cart-item-name">{product.item}</div>
-              <div className="cart-item-quantity">Quantity</div>
+              <div className="cart-item-quantity">
+                <div className="add-quantity-text">Add quantity</div>
+                <button
+                  className="increment-Quantity"
+                  onClick={() => {
+                    incrementQuantity(product);
+                  }}
+                >
+                  +
+                </button>
+                <div className="add-quantity-value">{product.quantity}</div>
+                <button
+                  className="decrement-Quantity"
+                  onClick={() => {
+                    decrementQuantity(product);
+                  }}
+                >
+                  -
+                </button>
+              </div>
               <div
                 onClick={() => {
                   removeItemFromCart(product);

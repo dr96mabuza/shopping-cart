@@ -4,12 +4,18 @@ import App from "./components/App";
 import Shop from "./components/shop";
 import Nav from "./components/nav";
 
+import meat from "./components/images/usman-yousaf-eOktYr3tAMo-unsplash.jpg";
+import macaroni from "./components/images/bozhin-karaivanov-m5Ft3bsalhQ-unsplash.jpg";
+import sugar from "./components/images/mathilde-langevin-ymEgsqhdOXw-unsplash.jpg";
+import spaghetti from "./components/images/markus-winkler-6MgAG3O7XQc-unsplash.jpg";
+import rice from "./components/images/jocelyn-morales-FXdpfV9TBRs-unsplash.jpg";
+
 const initialValues = [
-  { item: "rice", image: "", price: 20, num: 6 },
-  { item: "spaghetti", image: "", price: 19, num: 12 },
-  { item: "suger", image: "", price: 23, num: 8 },
-  { item: "pasta", image: "", price: 15, num: 3 },
-  { item: "meat", image: "", price: 30, num: 7 },
+  { item: "rice", src: rice, price: 20, quantity: 1 },
+  { item: "spaghetti", src: spaghetti, price: 19, quantity: 1 },
+  { item: "sugar", src: sugar, price: 23, quantity: 1 },
+  { item: "macaroni", src: macaroni, price: 15, quantity: 1 },
+  { item: "meat", src: meat, price: 30, quantity: 1 },
 ];
 
 const RouteSwitch = () => {
@@ -29,9 +35,35 @@ const RouteSwitch = () => {
 
   const calculateTotal = (array) => {
     const total = array.reduce((a, b) => {
-      return a + b.price * b.num;
+      return a + b.price * b.quantity;
     }, 0);
     return total;
+  };
+
+  const incrementQuantity = (item) => {
+    const incrementedArray = cart.map((a) => {
+      if (item === a) {
+        a.quantity += 1;
+        return a;
+      } else if (item !== a) {
+        return a;
+      }
+    });
+    setCart(incrementedArray);
+  };
+
+  const decrementQuantity = (item) => {
+    if (item.quantity > 0) {
+      const decrementedArray = cart.map((a) => {
+        if (item === a) {
+          a.quantity -= 1;
+          return a;
+        } else if (item !== a) {
+          return a;
+        }
+      });
+      setCart(decrementedArray);
+    }
   };
 
   const clearCart = () => {
@@ -43,10 +75,12 @@ const RouteSwitch = () => {
       return a === cartItem;
     });
 
-    const num = cart.find();
-
     if (product === true) {
-      cart.splice(num, 1);
+      const newCart = cart.filter((item) => {
+        return item !== cartItem;
+      });
+
+      setCart(newCart);
     }
   };
 
@@ -69,7 +103,14 @@ const RouteSwitch = () => {
         <Route
           path="/shop"
           element={
-            <Shop cart={cart} total={totalPrice} clearCart={clearCart} />
+            <Shop
+              cart={cart}
+              total={totalPrice}
+              clearCart={clearCart}
+              removeItemFromCart={removeItemFromCart}
+              incrementQuantity={incrementQuantity}
+              decrementQuantity={decrementQuantity}
+            />
           }
         />
       </Routes>
