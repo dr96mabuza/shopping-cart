@@ -1,0 +1,29 @@
+.App {
+  display: grid;
+  width: 100vw;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 30%));
+  gap: 5px;
+}
+
+#product-Container {
+  display: grid;
+  grid-template-rows: 60% repeat(3, 10%);
+  gap: 5px;
+  height: 200px;
+}
+
+.image-Container {
+  grid-row: 1/2;
+}
+
+.product-addToCartButton {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}

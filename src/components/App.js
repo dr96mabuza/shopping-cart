@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles/homeStyle.css";
 
 function App(props) {
   const { inventory, handleClick } = props;
@@ -8,6 +9,9 @@ function App(props) {
       {inventory.map((a) => {
         return (
           <div key={a.item} id="product-Container">
+            <div className="image-Container">
+              <img src={a.src} alt="" />
+            </div>
             <div className="product-name">{a.item}</div>
             <div className="product-price">R{a.price}</div>
             <button
