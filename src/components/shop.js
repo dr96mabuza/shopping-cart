@@ -1,7 +1,7 @@
 import React from "react";
 
 function Shop(props) {
-  const { cart } = props;
+  const { cart, total, clearCart } = props;
 
   return (
     <>
@@ -15,6 +15,8 @@ function Shop(props) {
           );
         })}
       </div>
+      <div>R{total}</div>
+      <button onClick={clearCart}>Clear Cart</button>
     </>
   );
 }

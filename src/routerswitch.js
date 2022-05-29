@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./components/App";
 import Shop from "./components/shop";
@@ -15,19 +15,63 @@ const initialValues = [
 const RouteSwitch = () => {
   const [inventory] = useState(initialValues);
   const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleClick = (item) => {
-    setCart(cart.concat(item));
+  const handleAddToCart = (item) => {
+    const click = cart.some((a) => {
+      return a === item;
+    });
+
+    if (click === false) {
+      setCart(cart.concat(item));
+    }
   };
+
+  const calculateTotal = (array) => {
+    const total = array.reduce((a, b) => {
+      return a + b.price * b.num;
+    }, 0);
+    return total;
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  const removeItemFromCart = (cartItem) => {
+    const product = cart.some((a) => {
+      return a === cartItem;
+    });
+
+    const num = cart.find();
+
+    if (product === true) {
+      cart.splice(num, 1);
+    }
+  };
+
+  useEffect(() => {
+    if (cart.length === 0) {
+      setTotalPrice(0);
+    } else {
+      setTotalPrice(calculateTotal(cart));
+    }
+  }, [cart]);
+
   return (
     <BrowserRouter>
       <Nav />
       <Routes>
         <Route
           path="/"
-          element={<App inventory={inventory} handleClick={handleClick} />}
+          element={<App inventory={inventory} handleClick={handleAddToCart} />}
         />
-        <Route path="/shop" element={<Shop cart={cart} />} />
+        <Route
+          path="/shop"
+          element={
+            <Shop cart={cart} total={totalPrice} clearCart={clearCart} />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

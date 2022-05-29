@@ -7,14 +7,17 @@ function App(props) {
     <div className="App">
       {inventory.map((a) => {
         return (
-          <div
-            key={a.item}
-            onClick={() => {
-              handleClick(a);
-            }}
-          >
-            <div>{a.item}</div>
-            <div>R{a.price}</div>
+          <div key={a.item} id="product-Container">
+            <div className="product-name">{a.item}</div>
+            <div className="product-price">R{a.price}</div>
+            <button
+              className="product-addToCartButton"
+              onClick={() => {
+                handleClick(a);
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         );
       })}
